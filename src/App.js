@@ -120,7 +120,7 @@ export default function AgileChimp() {
           <h2 className="text-4xl font-bold text-center mb-16">Why Choose Agile Chimp</h2>
           <div className="grid md:grid-cols-2 gap-8">
             {[
-              "Rigorous technical assessment process",
+              "On-site workplace",
               "Cost-effective solutions without compromising quality",
               "English-proficient professionals",
               "Agile methodology experts",
