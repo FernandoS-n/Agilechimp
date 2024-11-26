@@ -186,6 +186,7 @@ export default function WhyAgileChimp() {
             />
             <span className="ml-3 font-bold text-xl">Agile Chimp</span>
           </div>
+          <a href ="https://medium.com/@agilechimp" className="text-gray-400">Follow us in Medium.</a>
           <p className="text-gray-400">© 2024 Agile Chimp. All rights reserved.</p>
         </div>
       </footer>
