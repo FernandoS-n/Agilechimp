@@ -2,43 +2,31 @@
 import { useState } from "react";
 import { Menu, X, Users, Globe2, Rocket, CheckCircle2, ArrowRight } from "lucide-react";
 import emailjs from '@emailjs/browser';
-
+import React, { useRef } from 'react';
 
 export default function AgileChimp() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const ContactForm = () => {
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [stateMessage, setStateMessage] = useState(null);  const sendEmail = (e) => {
-      e.persist();
-      e.preventDefault();
-      setIsSubmitting(true);    emailjs
-        .sendForm(
-          process.env.REACT_APP_SERVICE_ID,
-          process.env.REACT_APP_TEMPLATE_ID,
-          e.target,
-          process.env.REACT_APP_PUBLIC_KEY
-        )
-        .then(
-          (result) => {
-            setStateMessage('Message sent!');
-            setIsSubmitting(false);
-            setTimeout(() => {
-              setStateMessage(null);
-            }, 5000); // hide message after 5 seconds
-          },
-          (error) => {
-            setStateMessage('Something went wrong, please try again later');
-            setIsSubmitting(false);
-            setTimeout(() => {
-              setStateMessage(null);
-            }, 5000); // hide message after 5 seconds
-          }
-        );
-      
-      // Clears the form after sending the email
-      e.target.reset();
-    };
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm('service_vo1hbbg', 'template_cn36k9n', form.current, {
+        publicKey: 'xv8M-GuYFrmcy5Cir',
+      })
+      .then(
+        () => {
+          console.log('SUCCESS!');
+        },
+        (error) => {
+          console.log('FAILED...', error.text);
+        },
+      );
+  };
+
+
 
   return (
     <div className="min-h-screen bg-gray-50 font-['Inter']">
@@ -178,10 +166,10 @@ export default function AgileChimp() {
         <div className="max-w-3xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12">Get in Touch</h2>
           <div className="bg-white p-8 md:p-12 rounded-2xl shadow-xl">
-            <form className="space-y-6">
+            <form ref={form} onSubmit={sendEmail} className="space-y-6">
               {[
-                { label: "Name", type: "text", placeholder: "Your name" },
-                { label: "Email", type: "email", placeholder: "your@email.com" }
+                { label: "Name", type: "text", placeholder: "Your name", name: "user_name" },
+                { label: "Email", type: "email", placeholder: "your@email.com", name: "user_email" }
               ].map((field) => (
                 <div key={field.label}>
                   <label className="block text-gray-700 mb-2 font-medium">{field.label}</label>
@@ -197,12 +185,14 @@ export default function AgileChimp() {
                 <textarea 
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all h-32"
                   placeholder="Tell us about your needs"
+                  name="message"
+                
                 ></textarea>
               </div>
-              <input type="submit" value="Send" disabled={isSubmitting}  className="w-full bg-gradient-to-r from-red-600 to-red-500 text-white py-4 rounded-xl transition-all hover:shadow-lg hover:shadow-red-500/25 font-medium">
-                Send Message
+              <input type="submit" value="Send Message"   className="w-full bg-gradient-to-r from-red-600 to-red-500 text-white py-4 rounded-xl transition-all hover:shadow-lg hover:shadow-red-500/25 font-medium">
+                
               </input>
-              {stateMessage && <p>{stateMessage}</p>}
+              
             </form>
           </div>
         </div>
@@ -224,4 +214,4 @@ export default function AgileChimp() {
       </footer>
     </div>
   );
-}}
+}
