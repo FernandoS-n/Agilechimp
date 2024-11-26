@@ -1,10 +1,44 @@
 
 import { useState } from "react";
 import { Menu, X, Users, Globe2, Rocket, CheckCircle2, ArrowRight } from "lucide-react";
+import emailjs from '@emailjs/browser';
 
 
 export default function AgileChimp() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const ContactForm = () => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [stateMessage, setStateMessage] = useState(null);  const sendEmail = (e) => {
+      e.persist();
+      e.preventDefault();
+      setIsSubmitting(true);    emailjs
+        .sendForm(
+          process.env.REACT_APP_SERVICE_ID,
+          process.env.REACT_APP_TEMPLATE_ID,
+          e.target,
+          process.env.REACT_APP_PUBLIC_KEY
+        )
+        .then(
+          (result) => {
+            setStateMessage('Message sent!');
+            setIsSubmitting(false);
+            setTimeout(() => {
+              setStateMessage(null);
+            }, 5000); // hide message after 5 seconds
+          },
+          (error) => {
+            setStateMessage('Something went wrong, please try again later');
+            setIsSubmitting(false);
+            setTimeout(() => {
+              setStateMessage(null);
+            }, 5000); // hide message after 5 seconds
+          }
+        );
+      
+      // Clears the form after sending the email
+      e.target.reset();
+    };
 
   return (
     <div className="min-h-screen bg-gray-50 font-['Inter']">
@@ -165,9 +199,10 @@ export default function AgileChimp() {
                   placeholder="Tell us about your needs"
                 ></textarea>
               </div>
-              <button className="w-full bg-gradient-to-r from-red-600 to-red-500 text-white py-4 rounded-xl transition-all hover:shadow-lg hover:shadow-red-500/25 font-medium">
+              <input type="submit" value="Send" disabled={isSubmitting}  className="w-full bg-gradient-to-r from-red-600 to-red-500 text-white py-4 rounded-xl transition-all hover:shadow-lg hover:shadow-red-500/25 font-medium">
                 Send Message
-              </button>
+              </input>
+              {stateMessage && <p>{stateMessage}</p>}
             </form>
           </div>
         </div>
@@ -189,4 +224,4 @@ export default function AgileChimp() {
       </footer>
     </div>
   );
-}
+}}
