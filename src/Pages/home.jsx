@@ -172,19 +172,12 @@ export default function AgileChimp() {
           <h2 className="text-4xl font-bold text-center mb-12">Get in Touch</h2>
           <div className="bg-white p-8 md:p-12 rounded-2xl shadow-xl">
             <form ref={form} onSubmit={sendEmail} className="space-y-6">
-              {[
-                { label: "Name", type: "text", placeholder: "Your name", name: "user_name" },
-                { label: "Email", type: "email", placeholder: "your@email.com", name: "user_email" }
-              ].map((field) => (
-                <div key={field.label}>
-                  <label className="block text-gray-700 mb-2 font-medium">{field.label}</label>
-                  <input 
-                    type={field.type} 
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all"
-                    placeholder={field.placeholder}
-                  />
-                </div>
-              ))}
+
+              <label className="block text-gray-700 mb-2 font-medium">Name</label>
+              <input type="text" name="user_name" className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all" />
+              <label className="block text-gray-700 mb-2 font-medium">Email</label>
+              <input type="email" name="email" className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all" />
+              
               <div>
                 <label className="block text-gray-700 mb-2 font-medium">Message</label>
                 <textarea 
