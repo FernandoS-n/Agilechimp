@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Menu, X, Users, Globe2, Rocket, CheckCircle2, ArrowRight } from "lucide-react";
 import emailjs from '@emailjs/browser';
 import React, { useRef } from 'react';
+import Swal from 'sweetalert2';
 
 export default function AgileChimp() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,7 +19,11 @@ export default function AgileChimp() {
       })
       .then(
         () => {
-          console.log('SUCCESS!');
+          Swal.fire({
+              title: 'Message Sent!',
+              text: 'Your message has been sent successfully.',
+              icon: 'success',
+          })
         },
         (error) => {
           console.log('FAILED...', error.text);
@@ -209,6 +214,7 @@ export default function AgileChimp() {
             />
             <span className="ml-3 font-bold text-xl">Agile Chimp</span>
           </div>
+          <a href ="https://medium.com/@agilechimp" className="text-gray-400">Follow us in Medium.</a>
           <p className="text-gray-400">© 2024 Agile Chimp. All rights reserved.</p>
         </div>
       </footer>
